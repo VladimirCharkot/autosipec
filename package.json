@@ -1,0 +1,16 @@
+{
+  "name": "autosipec",
+  "version": "1.0.0",
+  "description": "Automatización de carga de asistentes en SIPEC-CBA",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "setup": "npm install && npx playwright install chromium"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "multer": "^2.1.1",
+    "playwright": "^1.40.0",
+    "xlsx": "^0.18.5"
+  }
+}
