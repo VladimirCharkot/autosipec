@@ -22,9 +22,18 @@ if not exist "node_modules" (
   echo Primera ejecucion: instalando dependencias...
   npm install
   echo.
-  echo Descargando navegador Chromium para Playwright...
-  npx playwright install chromium
+)
+
+echo.
+echo Verificando navegador Chromium para Playwright...
+npx playwright install chromium
+if errorlevel 1 (
   echo.
+  echo ERROR: No se pudo instalar el navegador Chromium.
+  echo Verifica tu conexion a internet e intenta de nuevo.
+  echo.
+  pause
+  exit /b 1
 )
 
 echo.
