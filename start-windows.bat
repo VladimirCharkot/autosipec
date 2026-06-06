@@ -1,11 +1,9 @@
 @echo off
 cd /d "%~dp0"
-
 echo ===================================
 echo   AUTOSIPEC - Carga automatica SIPEC-CBA
 echo ===================================
 echo.
-
 where node >nul 2>&1
 if errorlevel 1 (
   echo ERROR: Node.js no esta instalado.
@@ -14,31 +12,24 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-
 for /f "tokens=*" %%v in ('node --version') do echo Node.js %%v detectado.
-
-if not exist "node_modules" (
-  echo.
-  echo Primera ejecucion: instalando dependencias...
-  npm install
-  echo.
-)
+echo Instalando dependencias...
+echo.
+cmd /c npm install --no-audit
 
 echo.
-echo Verificando navegador Chromium para Playwright...
-npx playwright install chromium
+echo Verificando/instalando navegador Chromium para Playwright...
+cmd /c npx playwright install chromium
 if errorlevel 1 (
   echo.
   echo ERROR: No se pudo instalar el navegador Chromium.
   echo Verifica tu conexion a internet e intenta de nuevo.
   echo.
   pause
-  exit /b 1
 )
-
 echo.
 echo Iniciando servidor en http://localhost:3000 ...
 echo ^(Cerra esta ventana para detener AUTOSIPEC^)
 echo.
-
 npm start
+pause
