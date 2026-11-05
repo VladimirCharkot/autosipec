@@ -2,15 +2,81 @@
   "name": "autosipec",
   "version": "1.0.0",
   "description": "Automatización de carga de asistentes en SIPEC-CBA",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
     "start": "node server.js",
-    "setup": "npm install && npx playwright install chromium"
+    "setup": "npm install && npx playwright install chromium",
+    "app": "electron .",
+    "dist": "electron-builder --mac --win --linux",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux"
   },
   "dependencies": {
     "express": "^4.18.0",
     "multer": "^2.1.1",
     "playwright": "^1.40.0",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^45.2.3",
+    "electron-builder": "^26.18.0"
+  },
+  "author": "Vlad",
+  "build": {
+    "appId": "ar.gob.cba.autosipec",
+    "productName": "AUTOSIPEC",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "server.js",
+      "automation.js",
+      "public/**/*",
+      "!public/README/**",
+      "!**/.DS_Store"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VladimirCharkot/autosipec.git"
   }
 }

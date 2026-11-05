@@ -56,6 +56,9 @@ async function clickAceptarYVolver(page, idFicha, idCurso) {
   }
 }
 
+// Normaliza para comparar: sin tildes, minúsculas y espacios colapsados
+const norm = t => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+
 async function main() {
   const { usuario, password, cursoNombre, localidad, rows, headless } = await readStdin();
 
@@ -96,7 +99,17 @@ async function main() {
     ]);
 
     const cargaLink = page.locator('a[href*="SeleccionaCursoCarga"]');
-    await cargaLink.waitFor({ timeout: 15000 }).catch(() => {
+    await cargaLink.waitFor({ timeout: 30000 }).catch(async () => {
+      // Diagnóstico: qué página quedó después del login
+      const url = page.url();
+      if (/error_login/i.test(url)) {
+        throw new Error('SIPEC rechazó el usuario o la contraseña (' + url.split('?')[1] + '). Verificá que sean correctos e iniciá sesión a mano en el sitio para confirmar.');
+      }
+      const texto = ((await page.locator('body').innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim().slice(0, 300);
+      const links = await page.$$eval('a', es => es.map(e => (e.innerText || '').trim()).filter(Boolean).slice(0, 12)).catch(() => []);
+      log('warning', `Página tras el login: ${url}`);
+      log('warning', `Texto de la página: ${texto}`);
+      log('warning', `Links visibles: ${links.join(' | ')}`);
       throw new Error('Login fallido o no se encontró el menú principal. Verificá usuario y contraseña.');
     });
     log('info', 'Login exitoso.');
@@ -120,13 +133,13 @@ async function main() {
       const cells = await row.$$('td');
       if (cells.length < 8) continue;
 
-      const nameText   = ((await cells[1].textContent()) || '').trim().toLowerCase();
-      const localText  = ((await cells[2].textContent()) || '').trim().toLowerCase();
+      const nameText   = norm(await cells[1].textContent());
+      const localText  = norm(await cells[2].textContent());
       const statusText = ((await cells[6].textContent()) || '').trim().toLowerCase();
 
       if (
-        nameText.includes(cursoNombre.trim().toLowerCase()) &&
-        localText.includes(localidad.trim().toLowerCase()) &&
+        nameText.includes(norm(cursoNombre)) &&
+        localText.includes(norm(localidad)) &&
         statusText.includes('abierto')
       ) {
         idFicha = await cells[7].$eval('input[name="txtIdFicha"]', el => el.value).catch(() => null);

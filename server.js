@@ -101,8 +101,10 @@ app.post('/api/run', (req, res) => {
 
   const config = JSON.stringify({ usuario, password, cursoNombre, localidad, rows, headless: !!headless });
 
-  currentProcess = spawn('node', [path.join(__dirname, 'automation.js')], {
+  // process.execPath + ELECTRON_RUN_AS_NODE: funciona con node y dentro de Electron empaquetado
+  currentProcess = spawn(process.execPath, [path.join(__dirname, 'automation.js')], {
     stdio: ['pipe', 'pipe', 'pipe'],
+    env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' },
   });
 
   currentProcess.stdin.write(config);
@@ -146,13 +148,23 @@ app.post('/api/stop', (req, res) => {
 });
 
 // Start server
-const PORT = 3000;
-app.listen(PORT, () => {
-  const url = `http://localhost:${PORT}`;
-  console.log(`\nAUTOSIPEC corriendo en ${url}\n`);
-  const cmd =
-    process.platform === 'darwin' ? `open ${url}` :
-    process.platform === 'win32' ? `start ${url}` :
-    `xdg-open ${url}`;
-  setTimeout(() => exec(cmd), 800);
-});
+function start(port = 3000) {
+  return new Promise((resolve, reject) => {
+    const server = app.listen(port, '127.0.0.1', () => resolve(server.address().port));
+    server.on('error', reject);
+  });
+}
+
+module.exports = { start };
+
+if (require.main === module) {
+  start(3000).then(port => {
+    const url = `http://localhost:${port}`;
+    console.log(`\nAUTOSIPEC corriendo en ${url}\n`);
+    const cmd =
+      process.platform === 'darwin' ? `open ${url}` :
+      process.platform === 'win32' ? `start ${url}` :
+      `xdg-open ${url}`;
+    setTimeout(() => exec(cmd), 800);
+  });
+}
