@@ -34,7 +34,7 @@ En el panel de la izquierda, completá:
 
 ### 3. Preparar el Excel
 
-El Excel debe tener una fila por participante. La única columna obligatoria es el **DNI** (7 u 8 dígitos). Las demás (`CUE`, `Rol`, `Condición`) son opcionales y tienen valores por defecto. Podés ver el detalle del formato en la sección **"Formato esperado del Excel"** de la interfaz.
+El Excel debe tener una fila por participante. La primer fila deben ser los títulos de columna (no debe tener otros datos ni filas vacías encima). La única columna obligatoria es el **DNI** (7 u 8 dígitos). Las demás (`CUE`, `Rol`, `Condición`) son opcionales y tienen valores por defecto. Podés ver el detalle del formato en la sección **"Formato esperado del Excel"** de la interfaz.
 
 ![Ejemplo de Excel](public/README/7-excel-de-prueba.jpeg)
 
