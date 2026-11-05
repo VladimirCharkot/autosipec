@@ -6,62 +6,25 @@ En lugar de cargar uno por uno a los participantes de una capacitación, AUTOSIP
 
 ---
 
-## Requisitos previos
+## Instalación
 
-- **Windows** (este tutorial usa el instalador para Windows).
-- **Node.js** instalado (versión LTS recomendada). Si no lo tenés, descargalo desde [nodejs.org](https://nodejs.org).
+Descargá el instalador correspondiente desde [la página de lanzamientos](https://github.com/VladimirCharkot/autosipec/releases/). 
 
-El resto de las dependencias (incluido el navegador que usa la automatización) se instalan solas la primera vez que ejecutás el programa.
+Si windows te muestra un mensaje como "Windows protegió su PC", clickeá "Más información" y ejecutalo de todas formas. 
 
----
-
-## Instalación paso a paso
-
-### 1. Descargar el proyecto desde GitHub (aquí arriba!)
-
-Entrá al repositorio en GitHub, hacé click en el botón verde **Code** y elegí **Download ZIP**.
-
-![Descargar ZIP desde GitHub](public/README/1-descargar-zip-github.jpeg)
-
-### 2. Extraer el ZIP
-
-Buscá el archivo descargado, hacé **click derecho** sobre él y elegí **Extraer todo…**. Esto crea una carpeta con todos los archivos del proyecto.
-
-![Extraer el ZIP](public/README/2-extraer-zip.jpeg)
-
-### 3. Ejecutar `start-windows.bat`
-
-Abrí la carpeta extraída y hacé doble click en **`start-windows.bat`**. 
-
-**Nota**: en la imagen a continuación se lee solo `start` pero luego de sacar la captura se actualizó el nombre a `start-windows`. Buscá `start-windows` si estás en windows o `start.command` si estás en mac.
-
-![Ejecutar start-windows.bat](public/README/3-correr-bat.jpeg)
-
-> Si Windows muestra un aviso de seguridad ("Windows protegió tu PC"), hacé click en **Más información → Ejecutar de todas formas**.
-
-### 4. Esperar a que se instalen las dependencias
-
-La primera vez, se abrirá una ventana negra (consola) que instalará automáticamente todo lo necesario. Esto puede tardar unos minutos. **No cierres esta ventana.**
-
-![Instalando dependencias](public/README/4-instalando-dependencias.jpeg)
-
-Cuando termine, la consola quedará corriendo la aplicación como a un sitio web en `http://localhost:3000`. Mientras esta ventana esté abierta, AUTOSIPEC está funcionando.
-
-![El servidor corriendo](public/README/5-bat-corriendo.jpeg)
-
-> Para **detener** AUTOSIPEC, simplemente cerrá esta ventana negra.
+La primera vez que lo ejecutes se va a descargar el navegador Chromium automatizable por vez única. 
 
 ---
 
 ## Cómo usar AUTOSIPEC
 
-### 5. Abrir la interfaz
+### 1. Abrir la interfaz
 
-Abrí tu navegador y entrá a **`http://localhost:3000`**. Vas a ver la pantalla de AUTOSIPEC.
+Ejecutá el instalador y abrí la aplicación.
 
 ![Interfaz de AUTOSIPEC](public/README/6-interfaz-app.jpeg)
 
-### 6. Completar los datos
+### 2. Completar los datos
 
 En el panel de la izquierda, completá:
 
@@ -69,13 +32,13 @@ En el panel de la izquierda, completá:
 - **Nombre del curso (parcial)**: alcanza con una parte del nombre (ej: `LUDOTECAS`).
 - **Localidad**: la localidad de la capacitación (ej: `RIO PRIMERO`).
 
-### 7. Preparar el Excel
+### 3. Preparar el Excel
 
 El Excel debe tener una fila por participante. La única columna obligatoria es el **DNI** (7 u 8 dígitos). Las demás (`CUE`, `Rol`, `Condición`) son opcionales y tienen valores por defecto. Podés ver el detalle del formato en la sección **"Formato esperado del Excel"** de la interfaz.
 
 ![Ejemplo de Excel](public/README/7-excel-de-prueba.jpeg)
 
-### 8. Cargar el Excel
+### 4. Cargar el Excel
 
 Arrastrá tu archivo Excel al recuadro **"Arrastrá tu Excel acá"** (o hacé click para seleccionarlo).
 
@@ -85,7 +48,7 @@ Cuando el archivo se cargue correctamente, vas a ver confirmado que quedó listo
 
 ![Excel cargado](public/README/9-excel-cargado.jpeg)
 
-### 9. Ejecutar la automatización
+### 5. Ejecutar la automatización
 
 Hacé click en el botón azul **"Ejecutar automatización"**. AUTOSIPEC va a ingresar a SIPEC y cargar a cada participante.
 
